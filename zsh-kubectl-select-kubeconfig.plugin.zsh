@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh -f
 
-# local KSC_BASEPATH="$HOME/.kubeconfigs"
-
 function ksc() {
   if [[ -z "$1" ]]; then
     unset KUBECONFIG KUBE_CONFIG_PATH
@@ -99,6 +97,7 @@ function kubectl_prompt() {
     return 0
   fi
 
+  # check if envdir is loaded and if so, set KUBECONFIG
   if [[ ! -z "$DIRENV_FILE" && ! -z "$KUBECONFIG" ]]; then
     local envrc_kubeconfig="$(echo "$DIRENV_FILE" | awk -F '/.envrc' '{print $1}')/$KUBECONFIG"
     if [[ -f "$envrc_kubeconfig" ]]; then
