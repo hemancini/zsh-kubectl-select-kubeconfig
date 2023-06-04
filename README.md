@@ -19,7 +19,7 @@ A zsh plugin for kubectl and eks clusters, handles kubeconfig files from a direc
 2. Activate the plugin in `~/.zshrc`:
 
    ```zsh
-   plugins=(... kubectl-select-kubeconfig)
+   plugins=(... zsh-kubectl-select-kubeconfig)
    ```
 
 3. Prompt function
