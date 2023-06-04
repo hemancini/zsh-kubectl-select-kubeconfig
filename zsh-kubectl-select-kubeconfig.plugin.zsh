@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh -f
 
+alias k="kubectl"
+
 function ksc() {
   if [[ -z "$1" ]]; then
     unset KUBECONFIG KUBE_CONFIG_PATH
@@ -69,18 +71,18 @@ function _ksc_kubeconfig_list() {
   ls -1 ${KSC_BASEPATH:-$HOME/.kubeconfigs} 2> /dev/null && return
 }
 
-function _ksc_aws_profiles() {
-  aws --no-cli-pager configure list-profiles 2> /dev/null && return
-  [[ -r "${AWS_CONFIG_FILE:-$HOME/.aws/config}" ]] || return 1
-  grep --color=never -Eo '\[.*\]' "${AWS_CONFIG_FILE:-$HOME/.aws/config}" | sed -E 's/^[[:space:]]*\[(profile)?[[:space:]]*([^[:space:]]+)\][[:space:]]*$/\2/g'
-}
-
 function _ksc_current_context(){
   if ! context="$(kubectl config current-context 2> /dev/null)"; then
       echo -e "${fg[red]}Context not found${reset_color}" >&2
       return 1
   fi
   echo $context
+}
+
+function _ksc_aws_profiles() {
+  aws --no-cli-pager configure list-profiles 2> /dev/null && return
+  [[ -r "${AWS_CONFIG_FILE:-$HOME/.aws/config}" ]] || return 1
+  grep --color=never -Eo '\[.*\]' "${AWS_CONFIG_FILE:-$HOME/.aws/config}" | sed -E 's/^[[:space:]]*\[(profile)?[[:space:]]*([^[:space:]]+)\][[:space:]]*$/\2/g'
 }
 
 function _ksc_current_aws_profile(){

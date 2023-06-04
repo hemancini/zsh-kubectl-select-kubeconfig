@@ -37,6 +37,12 @@ A zsh plugin for kubectl and eks clusters, handles kubeconfig files from a direc
    source ~/.zshrc
    ```
 
+## Aliases
+
+| Alias | Command   |
+| ----- | --------- |
+| `k`   | `kubectl` |
+
 ## Plugin commands
 
 - `ksc <kubeconfig>`: sets `$KUBECONFIG` and `$KUBE_CONFIG_PATH`. Display in `kubectl_prompt`.
