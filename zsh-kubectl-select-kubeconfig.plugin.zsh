@@ -2,6 +2,8 @@
 
 alias k="kubectl"
 
+alias k="kubectl"
+
 function ksc() {
   if [[ -z "$1" ]]; then
     unset KUBECONFIG KUBE_CONFIG_PATH
