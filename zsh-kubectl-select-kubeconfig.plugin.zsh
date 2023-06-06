@@ -93,6 +93,11 @@ function _ksc_current_aws_profile(){
   echo $ksc_aws_profile
 }
 
+function _ksc_kubeconfig_list_() {
+  reply=($(_ksc_kubeconfig_list))
+}
+compctl -K _ksc_kubeconfig_list_ ksc
+
 function kubectl_prompt() {
 
   if [[ -z "$KUBECONFIG" ]]; then
