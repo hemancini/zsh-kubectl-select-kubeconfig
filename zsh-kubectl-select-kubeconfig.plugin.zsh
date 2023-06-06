@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh -f
+#!/bin/zsh
 
 alias k="kubectl"
 
