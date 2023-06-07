@@ -98,7 +98,7 @@ function _ksc_kubeconfig_list_() {
 }
 compctl -K _ksc_kubeconfig_list_ ksc
 
-function kubectl_prompt() {
+function kubectl_prompt_info() {
 
   if [[ -z "$KUBECONFIG" ]]; then
     return 0
@@ -113,13 +113,13 @@ function kubectl_prompt() {
     fi
   fi
 
-  local prompt_context() {
-    echo -e "%{$FG[033]%}$1%{$reset_color%}" && return
+  local prompt_info() {
+    echo -e "%{$FG[${ZSH_THEME_KSC_COLOR:-033}]%}"${ZSH_THEME_KSC_PREFIX:-"<"}"$1"${ZSH_THEME_KSC_SUFFIX:-">"}"%{$reset_color%}" && return
   }
 
   local context="$(_ksc_current_context)"
   if [[ -z "$context" ]]; then
-    prompt_context "context not found"
+    prompt_info "context not found"
     return 1
   fi
   
@@ -127,10 +127,14 @@ function kubectl_prompt() {
   local ksc_aws_profile="$(_ksc_current_aws_profile $context)"
 
   if [[ -z "$cluster_name" ]]; then
-    prompt_context "cluster not found"
+    prompt_info "cluster not found"
   elif [[ ! -z "$ksc_aws_profile" && "$cluster_name" != "$ksc_aws_profile" ]]; then
-    prompt_context "$ksc_aws_profile:$cluster_name"
+    prompt_info "$ksc_aws_profile:$cluster_name"
   else
-    prompt_context "$cluster_name"
+    prompt_info "$cluster_name"
   fi
 }
+
+if [[ "$SHOW_KSC_PROMPT" != false && "$RPROMPT" != *'$(kubectl_prompt_info)'* ]]; then
+  RPROMPT+=' $(kubectl_prompt_info)'
+fi

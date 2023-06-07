@@ -22,16 +22,7 @@ A zsh plugin for kubectl and eks clusters, handles kubeconfig files from a direc
    plugins=(... zsh-kubectl-select-kubeconfig)
    ```
 
-3. Prompt function
-
-   You can add the current eks cluste in your prompt by adding `$(kubectl_prompt)`
-   to your `PROMPT` or `RPROMPT` variable.
-
-   ```sh
-   RPROMPT='$(kubectl_prompt)'
-   ```
-
-4. Restart zsh (such as by opening a new instance of your terminal emulator).
+3. Restart zsh (such as by opening a new instance of your terminal emulator) or execute:
 
    ```zsh
    source ~/.zshrc
@@ -45,14 +36,24 @@ A zsh plugin for kubectl and eks clusters, handles kubeconfig files from a direc
 
 ## Plugin commands
 
-- `ksc <kubeconfig>`: sets `$KUBECONFIG` and `$KUBE_CONFIG_PATH`. Display in `kubectl_prompt`.
+- `ksc <kubeconfig>`: sets `$KUBECONFIG` and `$KUBE_CONFIG_PATH`. Display in `kubectl_prompt_info`.
   Run `ksc` without arguments to clear the kubeconfig.
 - `ksc ls`: list all kubeconfig files in `$KSC_BASEPATH`.
 - `ksc help`: display help message.
 
 ## Plugin options
 
-- set `$KSC_BASEPATH` to the directory where your kubeconfig files are stored. Default: `~/.kubeconfigs`
+- set `KSC_BASEPATH` to the directory where your kubeconfig files are stored. Default: `~/.kubeconfigs`
+- Set `SHOW_KSC_PROMPT=false` in your zshrc file if you want to prevent the plugin from modifying your RPROMPT. Some themes might overwrite the value of RPROMPT instead of appending to it.
+
+## Theme
+
+The plugin creates an `kubectl_prompt_info` function that you can use in your theme, which displays
+the current `cluster name`. It uses four variables to control how that is shown:
+
+- ZSH_THEME_KSC_COLOR: sets the color of the prompt. Defaults to `033`. Use `spectrum_ls` to display the colors possible.
+- ZSH_THEME_KSC_PREFIX: sets the prefix of the prompt. Defaults to `<`.
+- ZSH_THEME_KSC_SUFFIX: sets the suffix of the prompt. Defaults to `>`.
 
 ## Configuration
 
